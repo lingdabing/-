@@ -1,15 +1,15 @@
-Attribute VB_Name = "Ä£¿é1"
+Attribute VB_Name = "æ¨¡å—1"
 
 
 ' ==================================================
-' Î¨Ò»¹ú¼ÒÅĞ¶¨£¨ºËĞÄĞŞ¸´£©
+' å”¯ä¸€å›½å®¶åˆ¤å®šï¼ˆæ ¸å¿ƒä¿®å¤ï¼‰
 ' ==================================================
 Function GetMatchedCountry(addr As String) As String
     Dim c As Variant
     addr = LCase(addr)
     GetMatchedCountry = ""
 
-    ' ---- ¸ßÓÅÏÈ¼¶£¨±ØĞëÎ¨Ò»£©----
+    ' ---- é«˜ä¼˜å…ˆçº§ï¼ˆå¿…é¡»å”¯ä¸€ï¼‰----
     If InStr(addr, "united kingdom") > 0 Then
         GetMatchedCountry = "United Kingdom"
         Exit Function
@@ -25,7 +25,7 @@ Function GetMatchedCountry(addr As String) As String
         Exit Function
     End If
 
-    ' ---- Å·ÖŞ DHL ----
+    ' ---- æ¬§æ´² DHL ----
     Dim euDHLList As Variant
     euDHLList = Array( _
         "austria", "france", "italy", "spain", "netherlands", "belgium", _
@@ -58,7 +58,7 @@ Function GetMatchedCountry(addr As String) As String
         End If
     Next c
 
-    ' ---- Ë³·á ----
+    ' ---- é¡ºä¸° ----
     Dim sfList As Variant
     sfList = Array("Hongkong", "korea", "singapore", "thailand", "taiwan", "malaysia")
 
@@ -94,7 +94,7 @@ Sub ProcessExcelData()
     lastRow = ws.Cells(ws.Rows.Count, "G").End(xlUp).Row
 
     ' ==================================================
-    ' ¢Ù ºÏ²¢ P-Q-R-S ¡ú Ğ´Èë D ¡ú Çå¿Õ
+    ' â‘  åˆå¹¶ P-Q-R-S â†’ å†™å…¥ D â†’ æ¸…ç©º
     ' ==================================================
     For r = 2 To lastRow
         pVal = Trim(ws.Cells(r, "P").Value)
@@ -115,7 +115,7 @@ Sub ProcessExcelData()
         ws.Cells(r, "S").ClearContents
     Next r
 
-    ' ¹ú¼ÒÁĞ±í
+    ' å›½å®¶åˆ—è¡¨
     euDHLList = Array("Austria", "France", "Italy", "Spain", "Netherlands", "Belgium", _
                       "Czech Republic", "Poland", "Sweden", "Finland", "Denmark", _
                       "Ireland", "Portugal", "Luxembourg", "Greece", "Hungary", _
@@ -127,7 +127,7 @@ Sub ProcessExcelData()
                            "Switzerland", "Serbia", "Greenland", "Faroe Islands")
 
     ' ==================================================
-    ' ¢Ú G ÁĞ£¨´øµç£©
+    ' â‘¡ G åˆ—ï¼ˆå¸¦ç”µï¼‰
     ' ==================================================
     Set rngG = ws.Range("G2:G" & lastRow)
     For Each cell In rngG
@@ -138,15 +138,15 @@ Sub ProcessExcelData()
 
             If InStr(cell.Value, "FW-SH-17M45X") > 0 Then
                 currentK = ws.Cells(cell.Row, "K").Value
-                If InStr(currentK, "´øµç") = 0 Then
-                    ws.Cells(cell.Row, "K").Value = IIf(currentK = "", "´øµç", currentK & vbLf & "´øµç")
+                If InStr(currentK, "å¸¦ç”µ") = 0 Then
+                    ws.Cells(cell.Row, "K").Value = IIf(currentK = "", "å¸¦ç”µ", currentK & vbLf & "å¸¦ç”µ")
                 End If
             End If
         End If
     Next cell
 
     ' ==================================================
-    ' ¢Û H-I-J
+    ' â‘¢ H-I-J
     ' ==================================================
     Set rngHIJ = ws.Range("H2:J" & lastRow)
     For Each cell In rngHIJ
@@ -157,7 +157,7 @@ Sub ProcessExcelData()
     Next cell
 
     ' ==================================================
-    ' ¢Ü I-J È¥ÖØ
+    ' â‘£ I-J å»é‡
     ' ==================================================
     Set rngIJ = ws.Range("I2:J" & lastRow)
     For Each cell In rngIJ
@@ -174,7 +174,7 @@ Sub ProcessExcelData()
     Next cell
 
     ' ==================================================
-    ' ¢İ ¹ú¼Ò & ÎïÁ÷£¨Î¨Ò»¹ú¼Ò°æ£©
+    ' â‘¤ å›½å®¶ & ç‰©æµï¼ˆå”¯ä¸€å›½å®¶ç‰ˆï¼‰
     ' ==================================================
     Set rngD = ws.Range("D2:D" & lastRow)
 
@@ -183,7 +183,7 @@ Sub ProcessExcelData()
 
             matchedCountry = GetMatchedCountry(cell.Value)
 
-            ' Í³Ò»¼Û¸ñ
+            ' ç»Ÿä¸€ä»·æ ¼
             hasPrice = False
             If IsNumeric(ws.Cells(cell.Row, "N").Value) Then
                 priceValue = ws.Cells(cell.Row, "N").Value
@@ -193,12 +193,12 @@ Sub ProcessExcelData()
                 hasPrice = True
             End If
 
-            ' Å·ÖŞ DHL
+            ' æ¬§æ´² DHL
             For Each c In euDHLList
                 If matchedCountry = c And hasPrice And priceValue < 149 And ws.Cells(cell.Row, "O").Value < 35 Then
                     currentK = ws.Cells(cell.Row, "K").Value
-                    If InStr(currentK, "³öÅ·ÖŞDHL×¨ÏßĞ¡°ü") = 0 Then
-                        ws.Cells(cell.Row, "K").Value = IIf(currentK = "", "³öÅ·ÖŞDHL×¨ÏßĞ¡°ü", currentK & vbLf & "³öÅ·ÖŞDHL×¨ÏßĞ¡°ü")
+                    If InStr(currentK, "å‡ºæ¬§æ´²DHLä¸“çº¿å°åŒ…") = 0 Then
+                        ws.Cells(cell.Row, "K").Value = IIf(currentK = "", "å‡ºæ¬§æ´²DHLä¸“çº¿å°åŒ…", currentK & vbLf & "å‡ºæ¬§æ´²DHLä¸“çº¿å°åŒ…")
                     End If
                 End If
             Next c
@@ -207,19 +207,19 @@ Sub ProcessExcelData()
             For Each c In eubCountryList
                 If matchedCountry = c And hasPrice And priceValue < 149 And ws.Cells(cell.Row, "O").Value < 35 Then
                     currentK = ws.Cells(cell.Row, "K").Value
-                    If InStr(currentK, "³öEUB") = 0 Then
-                        ws.Cells(cell.Row, "K").Value = IIf(currentK = "", "³öEUB", currentK & vbLf & "³öEUB")
+                    If InStr(currentK, "å‡ºEUB") = 0 Then
+                        ws.Cells(cell.Row, "K").Value = IIf(currentK = "", "å‡ºEUB", currentK & vbLf & "å‡ºEUB")
                     End If
                 End If
             Next c
 
-            ' ÃÀ¹ú
+            ' ç¾å›½
             If matchedCountry = "United States" And hasPrice Then
 
                 If priceValue < 50 And ws.Cells(cell.Row, "O").Value <= 20 Then
                     currentK = ws.Cells(cell.Row, "K").Value
-                    If InStr(currentK, "³öEUB") = 0 Then
-                        ws.Cells(cell.Row, "K").Value = IIf(currentK = "", "³öEUB", currentK & vbLf & "³öEUB")
+                    If InStr(currentK, "å‡ºEUB") = 0 Then
+                        ws.Cells(cell.Row, "K").Value = IIf(currentK = "", "å‡ºEUB", currentK & vbLf & "å‡ºEUB")
                     End If
                 End If
 
@@ -229,19 +229,19 @@ Sub ProcessExcelData()
                 End If
 
                 currentK = ws.Cells(cell.Row, "K").Value
-                If InStr(currentK, "´ø´Å") = 0 Then
-                    ws.Cells(cell.Row, "K").Value = IIf(currentK = "", "´ø´Å", currentK & vbLf & "´ø´Å")
+                If InStr(currentK, "å¸¦ç£") = 0 Then
+                    ws.Cells(cell.Row, "K").Value = IIf(currentK = "", "å¸¦ç£", currentK & vbLf & "å¸¦ç£")
                 End If
             End If
 
-            ' Ë³·á
+            ' é¡ºä¸°
             If matchedCountry = "HongKong" Or matchedCountry = "Korea" Or _
                matchedCountry = "Singapore" Or matchedCountry = "Thailand" Or _
                matchedCountry = "Taiwan" Or matchedCountry = "Malaysia" Then
 
                 currentK = ws.Cells(cell.Row, "K").Value
-                If InStr(currentK, "·¢Ë³·á") = 0 Then
-                    ws.Cells(cell.Row, "K").Value = IIf(currentK = "", "·¢Ë³·á", currentK & vbLf & "·¢Ë³·á")
+                If InStr(currentK, "å‘é¡ºä¸°") = 0 Then
+                    ws.Cells(cell.Row, "K").Value = IIf(currentK = "", "å‘é¡ºä¸°", currentK & vbLf & "å‘é¡ºä¸°")
                 End If
             End If
 
@@ -250,7 +250,7 @@ Sub ProcessExcelData()
     Next cell
 
     ' ==================================================
-    ' ¢Ş ÑùÊ½
+    ' â‘¥ æ ·å¼
     ' ==================================================
     For r = 2 To lastRow
         rowHasData = Application.WorksheetFunction.CountA(ws.Range("A" & r & ":L" & r)) > 0
@@ -265,13 +265,13 @@ Sub ProcessExcelData()
     Next r
 
    ' ==================================================
-' ¢ß ½« T ÁĞ¼ôÇĞµ½ D ÁĞÇ°Ãæ£¬²¢¸ø D ÁĞ¼Ó±ß¿ò
+' â‘¦ å°† T åˆ—å‰ªåˆ‡åˆ° D åˆ—å‰é¢ï¼Œå¹¶ç»™ D åˆ—åŠ è¾¹æ¡†
 ' ==================================================
 ws.Columns("T").Cut
 ws.Columns("D").Insert Shift:=xlToRight
 Application.CutCopyMode = False
 
-' ¸øĞÂµÄ D ÁĞ¼Ó±ß¿ò²¢¾ÓÖĞ
+' ç»™æ–°çš„ D åˆ—åŠ è¾¹æ¡†å¹¶å±…ä¸­
 With ws.Range("D1:D" & lastRow)
     .Borders.LineStyle = xlContinuous
     .Borders.Weight = xlThin
@@ -279,7 +279,7 @@ With ws.Range("D1:D" & lastRow)
     .VerticalAlignment = xlCenter
 End With
 
-    MsgBox "´¦ÀíÍê³É£ºÎ¨Ò»¹ú¼ÒÅĞ¶¨ + ÎïÁ÷¹æÔòÒÑÎÈ¶¨ÔËĞĞ", vbInformation
+    MsgBox "å¤„ç†å®Œæˆï¼šå”¯ä¸€å›½å®¶åˆ¤å®š + ç‰©æµè§„åˆ™å·²ç¨³å®šè¿è¡Œ", vbInformation
 
 End Sub
 
